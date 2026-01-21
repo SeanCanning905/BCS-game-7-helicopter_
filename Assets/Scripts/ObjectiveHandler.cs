@@ -1,25 +1,30 @@
-using System.ComponentModel;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectiveHandler : MonoBehaviour
 {    
-    public bool hasCrate = false;
-    Container container;
+    bool hasCrate = false;
 
     void Start()
     {
-        GetComponentInChildren<Container>();
+        
     }
 
     void Update()
     {
-        if(hasCrate)
+        if (hasCrate)
         {
-            gameObject.SetActive(true);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Transform child = transform.GetChild(i);
+                if (child.CompareTag("Crate"))
+                {
+                    child.gameObject.SetActive(true);
+                }
+            }
         }
     }
+    
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Crate"))
