@@ -10,18 +10,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float rotationForce = 100f;
     //[SerializeField] AudioClip thrustSound;
 
+    [Header("Crate Mechanics")]
+    [SerializeField] GameObject containerPrefab;
+
     [Header("Particle System")]
     //[SerializeField] ParticleSystem mainThruster;
 
     Rigidbody rb;
     AudioSource audioSource;
 
+    ObjectiveHandler objectiveHandler;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         audioSource = FindFirstObjectByType<AudioSource>();
-
+        objectiveHandler = GetComponent<ObjectiveHandler>();
     }
 
     // Update is called once per frame
@@ -31,6 +37,7 @@ public class PlayerController : MonoBehaviour
         ProcessTilt();
         ProcessYaw();
         ProcessRotation();
+        DropCrate();
     }
 
     void ProcessThrust()
@@ -113,5 +120,18 @@ public class PlayerController : MonoBehaviour
     void ApplyRotation(float rotationThisFrame)
     {
         transform.Rotate(rotationThisFrame * Time.deltaTime * Vector3.up);
+    }
+
+    void DropCrate()
+    {
+        if (Input.GetKey(KeyCode.F))
+        {
+            //if (hasCrate == true)
+            //{
+                //hasCrate = false;
+                Vector3 dropPosition = new Vector3(0, -10, 0);
+                Instantiate(containerPrefab, dropPosition, Quaternion.identity, transform);
+            //}
+        }
     }
 }

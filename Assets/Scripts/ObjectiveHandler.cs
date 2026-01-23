@@ -15,10 +15,7 @@ public class ObjectiveHandler : MonoBehaviour
 
     void Update()
     {
-        if(hasCrate)
-        {
-            gameObject.SetActive(true);
-        }
+        CrateHandler();
     }
     void OnTriggerEnter(Collider other)
     {
@@ -26,6 +23,14 @@ public class ObjectiveHandler : MonoBehaviour
         { 
             hasCrate = true;
             other.gameObject.SetActive(false); 
+        }
+    }
+
+    void CrateHandler()
+    {
+        if (hasCrate)
+        {
+            transform.GetChild(3).gameObject.SetActive(true);
         }
     }
 }
