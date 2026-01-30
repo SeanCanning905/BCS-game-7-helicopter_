@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Crate Mechanics")]
     [SerializeField] GameObject containerPrefab;
+    [SerializeField] Transform dropPosition;
 
     [Header("Particle System")]
     //[SerializeField] ParticleSystem mainThruster;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     ObjectiveHandler objectiveHandler;
 
+    //Vector3 dropPosition = new Vector3 (0, -9, 0);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         audioSource = FindFirstObjectByType<AudioSource>();
         objectiveHandler = GetComponent<ObjectiveHandler>();
+        //dropPosition = GetComponentInChildren<Transform>();
     }
 
     // Update is called once per frame
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
         ProcessYaw();
         ProcessRotation();
         DropCrate();
+        dropPosition = GetComponentInChildren<Transform>();
     }
 
     void ProcessThrust()
@@ -124,14 +128,28 @@ public class PlayerController : MonoBehaviour
 
     void DropCrate()
     {
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKey(KeyCode.F) && objectiveHandler.hasCrate == true)
         {
-            //if (hasCrate == true)
-            //{
-                //hasCrate = false;
-                Vector3 dropPosition = new Vector3(0, -10, 0);
-                Instantiate(containerPrefab, dropPosition, Quaternion.identity, transform);
-            //}
+
+            Debug.Log("Presed F");
+            objectiveHandler.hasCrate = false;
+            Invoke(nameof(CrateSpawnControl), 0f);
         }
     }
+
+    void CrateSpawnControl()
+    {
+        Instantiate(containerPrefab, dropPosition, true);
+    }
+
+    void UpdateDropPosition()
+    {
+        //dropPosition.transform.position = new Transform.local.position;
+    }
 }
+
+// hardcoded vector 3 to save position of children 
+// take instantiate of out update method
+// check for the input every frame only instatiate when needed!!!!
+
+// simplfy 

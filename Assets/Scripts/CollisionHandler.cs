@@ -24,15 +24,18 @@ public class CollisionHandler : MonoBehaviour
             case "Finish":
                 StartSuccessSequence();
                 Debug.Log("Collided with finish");
-                break;
+                    break;
             case "Enemy":
                 StartCrashSequence();
                 Debug.Log("Collided with enemy");
                     break;
+            case "Crate":
+                Debug.Log("Touched a crate");
+                    break;
             default:
                 Debug.Log("Collided With Other");
                 StartCrashSequence();
-                break;
+                    break;
         }
     }
 

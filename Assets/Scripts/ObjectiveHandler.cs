@@ -6,11 +6,10 @@ using UnityEngine;
 public class ObjectiveHandler : MonoBehaviour
 {    
     public bool hasCrate = false;
-    Container container;
 
     void Start()
     {
-        GetComponentInChildren<Container>();
+
     }
 
     void Update()
@@ -22,7 +21,7 @@ public class ObjectiveHandler : MonoBehaviour
         if (other.gameObject.CompareTag("Crate"))
         { 
             hasCrate = true;
-            other.gameObject.SetActive(false); 
+            Destroy(other.gameObject);
         }
     }
 
@@ -31,6 +30,10 @@ public class ObjectiveHandler : MonoBehaviour
         if (hasCrate)
         {
             transform.GetChild(3).gameObject.SetActive(true);
+        }
+        else
+        {
+            transform.GetChild(3).gameObject.SetActive(false);
         }
     }
 }
